@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: api
+        depends_on: 
+            - db
+        environment:
+            MAILER_USER: ${MAILER_USER}
+            MAILER_HOST: ${MAILER_HOST}
+            MAILER_PASSWORD: ${MAILER_PASSWORD}
+            JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+            JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB}
+            PORT: 3000
+        ports:
+            - "80:3000"
+        env_file:
+            - .env
+        networks:
+            - default
+    db:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: db
+        ports:
+            - "35000:5432"
+        networks:
+            - default
+        environment: 
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB}
+        volumes:
+            - ./src/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  default:
+    name: "sexadapt-net"

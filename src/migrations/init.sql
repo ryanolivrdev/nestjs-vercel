@@ -1,0 +1,3 @@
+CREATE DATABASE sex_adapt;
+CREATE USER sexadapt WITH PASSWORD 'sexadapt';
+GRANT ALL PRIVILEGES ON DATABASE sex_adapt TO sexadapt;
