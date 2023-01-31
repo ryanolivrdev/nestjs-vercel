@@ -78,8 +78,8 @@ export class AuthService {
     });
   }
 
-  hashData(data: string) {
-    return argon2.hash(data);
+  async hashData(data: string) {
+    return await argon2.hash(data);
   }
 
   async getTokens(userId: string, email: string): Promise<Tokens> {

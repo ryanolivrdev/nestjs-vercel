@@ -22,6 +22,7 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     try {
+      createUserDto.password = await hash(createUserDto.password);
       const user = this.usersRepository.create(createUserDto);
       const accessibility = this.accessibilityRepository.create(
         createUserDto.accessibilities
