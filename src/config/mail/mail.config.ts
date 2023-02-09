@@ -11,7 +11,7 @@ export class MailerConfigService implements MailerOptionsFactory {
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
     return {
       transport: {
-        host: this.configService.get('MAILER_HOST'),
+        service: this.configService.get('MAILER_SERVICE'),
         port: this.configService.get('MAILER_PORT'),
         secure: false,
         auth: {
